@@ -241,6 +241,11 @@ public final class Installer extends ModuleInstall {
 
         Runnable collapseTreeAction = () -> {
             runOnEDT(() -> {
+                JTree tree = resolveTreeFrom(btv);
+                if (tree != null) {
+                    tree.requestFocus();
+                }
+                
                 if (collapseActionToExec != null) {
                     collapseActionToExec.actionPerformed(
                             new ActionEvent(
@@ -251,7 +256,6 @@ public final class Installer extends ModuleInstall {
                     );
                 } else {
                     // Fallback: collapse all rows in the underlying tree (e.g., Favorites)
-                    JTree tree = resolveTreeFrom(btv);
                     if (tree != null) {
                         // collapse from bottom to top; rowCount shrinks as we collapse
                         for (int row = tree.getRowCount() - 1; row >= 0; row--) {
@@ -265,6 +269,10 @@ public final class Installer extends ModuleInstall {
         // Select-in action (“Sync with Code Editor”)
         Runnable selectInTreeAction = () -> {
             runOnEDT(() -> {
+                JTree tree = resolveTreeFrom(btv);
+                if (tree != null) {
+                    tree.requestFocus();
+                }
                 ContextAwareAction template;
                 
                 FileObject fo = getActiveEditorFile();
@@ -335,7 +343,7 @@ public final class Installer extends ModuleInstall {
                         selectInFavorites.actionPerformed(
                                 new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "selectInFavorites")
                         );
-                    }                   
+                    }
                 }
             });
         };
